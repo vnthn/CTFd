@@ -10,6 +10,7 @@ RUN apt-get update \
         libffi-dev \
         libssl-dev \
         git \
+        socat \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,6 +35,8 @@ RUN adduser \
     ctfd
 RUN chmod +x /opt/CTFd/docker-entrypoint.sh \
     && chown -R 1001:1001 /opt/CTFd /var/log/CTFd /var/uploads
+
+RUN chmod u+s /usr/bin/socat
 
 USER 1001
 EXPOSE 8000

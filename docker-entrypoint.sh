@@ -8,6 +8,9 @@ ERROR_LOG=${ERROR_LOG:--}
 WORKER_TEMP_DIR=${WORKER_TEMP_DIR:-/dev/shm}
 SECRET_KEY=${SECRET_KEY:-}
 
+# make docker.sock available through socat
+socat -d TCP-L:2375,reuseaddr,fork UNIX:/var/run/docker.sock &
+
 # Check that a .ctfd_secret_key file or SECRET_KEY envvar is set
 if [ ! -f .ctfd_secret_key ] && [ -z "$SECRET_KEY" ]; then
     if [ $WORKERS -gt 1 ]; then
